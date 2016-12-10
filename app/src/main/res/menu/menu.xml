@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+>
+
+    <item
+        android:id="@+id/empty"
+        android:title="Setting"
+        android:orderInCategory="101"
+        app:showAsAction="always" >
+        <menu>
+
+            <item android:id="@+id/most_popular"
+                app:showAsAction="ifRoom"
+                android:title="Most Popular" />
+
+            <item android:id="@+id/top_rated"
+                app:showAsAction="ifRoom"
+                android:title="Top Rated" />
+
+            <item android:id="@+id/favorite"
+                app:showAsAction="ifRoom"
+                android:title="Favorite" />
+
+        </menu>
+    </item>
+</menu>
