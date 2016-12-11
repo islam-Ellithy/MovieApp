@@ -3,28 +3,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F8F8FF"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.islam.movieapp.MainActivity"
-    android:background="#F8F8FF">
+    tools:context="com.example.islam.movieapp.MainActivity">
 
     <FrameLayout
-        android:layout_height="match_parent"
-        android:layout_width="0dp"
-        android:layout_weight="0.5"
-        android:numColumns="auto_fit"
-        android:verticalSpacing="10dp"
         android:id="@+id/flMain"
-        android:background="#F8F8FF" />
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.5"
+        android:background="#585e5e"
+        android:numColumns="auto_fit"
+        android:verticalSpacing="10dp" />
 
     <FrameLayout
-        android:layout_height="match_parent"
-        android:layout_width="0dp"
-        android:layout_weight="0.5"
         android:id="@+id/flDetails"
-        android:background="#0ceb70">
-    </FrameLayout>
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.5"
+        android:background="#F8F8FF"></FrameLayout>
 
 </LinearLayout>

@@ -44,6 +44,21 @@ public class MainFragment extends Fragment {
     ArrayList<Movie> movieList;
     static String API_KEY = "f938081fe3aeb032354e55c5d152d05f";
 
+    public void onResume()
+    {  // After a pause OR at startup
+        super.onResume();
+
+        Bundle sentData = getArguments();
+        final String favorite = sentData.getString("favorite");
+        String url = sentData.getString("url");
+
+        if (favorite != null && favorite.contains("favorite")) {
+            FavoriteMovies();
+        } else {
+            new FetchMovies().execute(url);
+        }
+    }
+
     private OnTaskCompleted listener = new OnTaskCompleted() {
         @Override
         public void onTaskCompleted(Movie mMovie) {
@@ -82,11 +97,14 @@ public class MainFragment extends Fragment {
             final String favorite = sentData.getString("favorite");
             String url = sentData.getString("url");
 
+
+            /*
             if (favorite != null && favorite.contains("favorite")) {
                 FavoriteMovies();
             } else {
                 new FetchMovies().execute(url);
             }
+*/
             gridPosters.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -101,6 +119,7 @@ public class MainFragment extends Fragment {
                         ArrayList<DBTable> DBList = dbHandler.selectAll();
                         table = DBList.get(position);
                         mMovie = FetchMovieByURI(table.getId());
+                        //Toast.makeText(getContext(),mMovie.)
                     }
                     else
                         mMovie = movieList.get(position);
@@ -280,7 +299,7 @@ public class MainFragment extends Fragment {
                     temp.setTitle(jsonObj.getString("original_title"));
                     temp.setOverview(jsonObj.getString("overview"));
                     temp.setReleaseDate(jsonObj.getString("release_date"));
-                    temp.setUserRating(jsonObj.getDouble("vote_average"));
+                    temp.setUserRating(jsonObj.getString("vote_average"));
 
                     movies.add(temp);
                 }
@@ -372,7 +391,7 @@ public class MainFragment extends Fragment {
                 temp.setTitle(jsonObj.getString("original_title"));
                 temp.setOverview(jsonObj.getString("overview"));
                 temp.setReleaseDate(jsonObj.getString("release_date"));
-                temp.setUserRating(jsonObj.getDouble("vote_average"));
+                temp.setUserRating(jsonObj.getString("vote_average"));
 
 
                 movie.clone(temp);

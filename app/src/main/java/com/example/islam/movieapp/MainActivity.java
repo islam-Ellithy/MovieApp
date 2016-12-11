@@ -20,16 +20,19 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
     private Context context;
     Boolean IsTwoPane = false;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         IsTwoPane = false;
+        setTitle("Pop Movies");
+        String url = "http://api.themoviedb.org/3/movie/popular?api_key=" + API_KEY;
 
         if (isNetworkAvailable()) {
             if (savedInstanceState == null) {
 
-                String url = "http://api.themoviedb.org/3/movie/popular?api_key=" + API_KEY;
 
                 MainFragment mainFragment = new MainFragment();
 
@@ -41,8 +44,9 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
 
                 mainFragment.setArguments(extra);
 
-                getSupportFragmentManager().beginTransaction()
-                        .add(R.id.flMain, mainFragment, "")
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.flMain, mainFragment, "")
                         .commit();
 
                 if (findViewById(R.id.flDetails) != null) {
@@ -60,27 +64,32 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
 
         //Case One Pane
         //Start Details Activity
-        if (!IsTwoPane) {
-            Intent i = new Intent(this, DetailsActivity.class);
-            if (mov.getId() != null) {
-                i.putExtra("movie", mov);
-                startActivity(i);
+        if (isNetworkAvailable()) {
+
+            if (!IsTwoPane) {
+                Intent i = new Intent(this, DetailsActivity.class);
+                if (mov.getId() != null) {
+                    i.putExtra("movie", mov);
+                    startActivity(i);
+                }
+            } else {//Case Two Pane
+                DetailsFragment detailsFragment = new DetailsFragment();
+                Bundle extras = new Bundle();
+
+                if (mov.getId() != null) {
+
+                    extras.putSerializable("movie", mov);
+                    detailsFragment.setArguments(extras);
+
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.flDetails, detailsFragment, "")
+                            .commit();
+                }
             }
-        } else {//Case Two Pane
-            DetailsFragment detailsFragment = new DetailsFragment();
-            Bundle extras = new Bundle();
+        } else {
+            Toast.makeText(this, "No Internet Connection", Toast.LENGTH_LONG).show();
 
-            if (mov.getId() != null) {
-
-            extras.putSerializable("movie", mov);
-
-            detailsFragment.setArguments(extras);
-
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.flDetails, detailsFragment, "")
-                        .commit();
-            }
         }
     }
 
@@ -96,6 +105,7 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
+
         return true;
     }
 
@@ -109,6 +119,8 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
         int id = item.getItemId();
         String url = null;
         Bundle bundle = new Bundle();
+        item.setChecked(true);
+
         try {
             if (isNetworkAvailable()) {
 
@@ -116,9 +128,10 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
 
                     url = "http://api.themoviedb.org/3/movie/popular?api_key=" + API_KEY;
                     bundle.putString("url", url);
+
                     m.setArguments(bundle);
                     getSupportFragmentManager().beginTransaction()
-                            .add(R.id.flMain, m, "")
+                            .replace(R.id.flMain, m, "")
                             .commit();
 
                     return true;
@@ -129,7 +142,7 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
                     bundle.putString("url", url);
                     m.setArguments(bundle);
                     getSupportFragmentManager().beginTransaction()
-                            .add(R.id.flMain, m, "")
+                            .replace(R.id.flMain, m, "")
                             .commit();
                     return true;
                 }
@@ -138,7 +151,7 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
                     bundle.putString("favorite", favorite);
                     m.setArguments(bundle);
                     getSupportFragmentManager().beginTransaction()
-                            .add(R.id.flMain, m, "")
+                            .replace(R.id.flMain, m, "")
                             .commit();
 
                     return true;

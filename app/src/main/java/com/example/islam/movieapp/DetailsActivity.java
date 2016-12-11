@@ -1,6 +1,9 @@
 package com.example.islam.movieapp;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -9,7 +12,6 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import static com.example.islam.movieapp.R.id;
 import static com.example.islam.movieapp.R.layout;
 
 /**
@@ -22,6 +24,13 @@ public class DetailsActivity extends AppCompatActivity {
     ArrayList<Trailer> trailersList;
 
     @Override
+    public void onRestart() {
+        super.onRestart();
+        //When BACK BUTTON is pressed, the activity on the stack is restarted
+        //Do what you want on the refresh procedure here
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         movieDBHandler = new MovieDBHandler(this);
@@ -31,6 +40,8 @@ public class DetailsActivity extends AppCompatActivity {
         setContentView(layout.activity_details);
 
         try {
+
+            setTitle("Movie Details");
 
             Intent i = this.getIntent();
 
@@ -53,12 +64,18 @@ public class DetailsActivity extends AppCompatActivity {
                         .commit();
             }
 
-           //PrintTable();
-
         } catch (Exception e) {
             Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_LONG).show();
         }
 
+    }
+
+    //check internet connection
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
     @Override
@@ -68,68 +85,26 @@ public class DetailsActivity extends AppCompatActivity {
 
         final Movie movie = (Movie) i.getSerializableExtra("movie");
 
-
         getMenuInflater().inflate(R.menu.menu_movie_details, menu);
 
-        MenuItem itemView = (MenuItem) menu.findItem(id.action_favorite);
-
-        if (movieDBHandler.isChecked(movie.getId())) {
-            itemView.setChecked(true);
-            itemView.setIcon(R.drawable.on);
-        } else {
-            itemView.setChecked(false);
-            itemView.setIcon(R.drawable.off);
-        }
         return true;
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        Intent i = this.getIntent();
-        final Movie movie = (Movie) i.getSerializableExtra("movie");
-        try {
+        int id = item.getItemId();
 
-            switch (item.getItemId()) {
-                //favorite item if selected
-                case id.action_favorite:
-                    if (item.isChecked()) {
-                        item.setChecked(false);
-                        item.setIcon(R.drawable.off);
-                        if (movie.getId() != null) {
-                            movieDBHandler.deleteMovie(movie.getId());
-                        }
-                        Toast.makeText(getBaseContext(),"Marked as non favorite",Toast.LENGTH_SHORT).show();
+        switch (id) {
+            case R.id.back:
+//                Intent intent = new Intent(DetailsActivity.this,MainActivity.class);
+  //              startActivity(intent);
+                finish();
 
-                    } else {
-                        DBTable t = new DBTable();
-                        t.setPoster(movie.getPoster());
-                        t.setId(movie.getId());
-                        item.setChecked(true);
-                        item.setIcon(R.drawable.on);
-                        if (movie.getId() != null) {
-                            movieDBHandler.addMovie(t);
-                        }
-                        Toast.makeText(getBaseContext(),"Marked as favorite",Toast.LENGTH_SHORT).show();
-                    }
-                    return true;
-
-                case id.back:
-                    finish();
-                    return true;
-                default:
-                    // If we got here, the user's action was not recognized.
-                    // Invoke the superclass to handle it.
-                    return super.onOptionsItemSelected(item);
-            }
-        } catch (Exception e) {
-            // Toast.makeText(this,"exception Due to :" +e.getMessage(), Toast.LENGTH_LONG).show();
+                return true;
         }
-        return true;
+        return super.onOptionsItemSelected(item);
     }
-
-
 }
 
 

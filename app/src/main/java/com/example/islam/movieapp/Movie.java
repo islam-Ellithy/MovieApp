@@ -13,7 +13,7 @@ class Movie implements Serializable {
     private String release_date;
     private String id;
     private String original_title;
-    private double vote_average;
+    private String vote_average;
 
     public Movie() {
     }
@@ -56,7 +56,7 @@ class Movie implements Serializable {
         return this.original_title;
     }
 
-    public double getUserRating() {
+    public String getUserRating() {
         return vote_average;
     }
 
@@ -81,7 +81,7 @@ class Movie implements Serializable {
         this.original_title = title;
     }
 
-    public void setUserRating(double vote_average) {
+    public void setUserRating(String vote_average) {
         this.vote_average = vote_average;
     }
 }

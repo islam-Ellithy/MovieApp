@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#FFFFF0"
+    android:background="#585e5e"
     tools:context="com.example.islam.movieapp.MainFragment">
 
 

@@ -1,119 +1,166 @@
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/scrollView"
-    android:layout_gravity="center_horizontal|bottom" >
+    android:layout_gravity="center_horizontal|bottom">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="10dp">
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#585e5e"
+                android:elevation="4dp"
+                android:paddingBottom="25sp"
+                android:paddingLeft="20sp"
+                android:paddingTop="30sp"
+                android:text="Chappie"
+                android:textColor="#ffffff"
+                android:textSize="40sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="20dp"
+            android:paddingTop="7dp">
+
+            <ImageView
+                android:id="@+id/movieImage"
+                android:layout_width="0dp"
+                android:layout_weight="0.5"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:scaleType="fitXY"
+                android:src="@mipmap/icon" />
+
+
+            <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="0.5"
+                android:orientation="vertical"
+                android:paddingLeft="35dp">
+
+                <TextView
+                    android:id="@+id/date"
+                    android:layout_width="match_parent"
+                    android:gravity="left"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="2016"
+                    android:textColor="#FF767676"
+                    android:textSize="22sp" />
+
+
+                <TextView
+                    android:id="@+id/rate"
+                    android:layout_width="match_parent"
+                    android:gravity="left"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="11dp"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginLeft="10dp"
+                    android:paddingTop="6dp"
+                    android:text="8.1/10"
+                    android:textColor="#000000"
+                    android:textSize="20sp" />
+
+                <ImageButton android:id="@+id/favorite"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_gravity="left"
+                    android:src="@drawable/star"
+                    android:background="#00ffffff" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
 
         <TextView
+            android:id="@+id/overview"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:text="@string/title"
-            android:id="@+id/title"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:gravity="left"
+            android:maxLines="@android:integer/config_longAnimTime"
+            android:scrollbars="vertical"
+            android:soundEffectsEnabled="true"
+            android:text="@string/overview"
             android:textColor="@color/colorPrimary" />
 
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="@dimen/activity_horizontal_margin">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="7dp">
 
-            <ImageView
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="6dp"
+                android:text="@string/trailer_label"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/colorPrimaryDark"
+                android:textStyle="bold" />
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/traillers"
                 android:layout_width="match_parent"
-                android:layout_height="400dp"
-                android:scaleType="fitXY"
-                android:src="@mipmap/icon"
-                android:layout_gravity="center"
-                android:id="@+id/poster"
-                android:soundEffectsEnabled="false" >
-            </ImageView>
+                android:layout_height="match_parent"
+                android:clickable="true"
+                android:scrollbars="vertical" />
+
         </LinearLayout>
 
-        <TextView
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:id="@+id/date"
-            android:layout_margin="@dimen/activity_horizontal_margin"
-            android:textColor="#FF303F9F"
-            android:textStyle="bold"
-            android:text="@string/date" />
+            android:orientation="vertical"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="7dp">
 
-        <TextView
-            android:scrollbars="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/user_raring"
-            android:id="@+id/vote_average"
-            android:layout_gravity="center"
-            android:layout_margin="@dimen/activity_horizontal_margin"
-            android:textColor="@color/colorPrimaryDark"
-            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/review_label"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/colorPrimaryDark"
+                android:textStyle="bold" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/overview"
-            android:id="@+id/overview"
-            android:gravity="left"
-            android:textColor="@color/colorPrimary"
-            android:layout_margin="@dimen/activity_horizontal_margin"
-            android:scrollbars="vertical"
-            android:soundEffectsEnabled="true"
-            android:layout_gravity="center_horizontal|bottom"
-            android:maxLines="@android:integer/config_longAnimTime" />
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/reviews"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clickable="true"
+                android:scrollbars="vertical" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/trailer_label"
-            android:id="@+id/textView"
-            android:layout_margin="@dimen/activity_horizontal_margin"
-            android:textColor="@color/colorPrimaryDark"
-            android:textStyle="bold" />
-
-        <android.support.v7.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scrollbars="vertical"
-            android:clickable="true"
-            android:id="@+id/traillers" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/review_label"
-            android:id="@+id/textView2"
-            android:layout_margin="@dimen/activity_horizontal_margin"
-            android:textColor="@color/colorPrimaryDark"
-            android:textStyle="bold" />
-
-        <android.support.v7.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scrollbars="vertical"
-            android:clickable="true"
-            android:id="@+id/reviews" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text=""
-            android:id="@+id/test" />
+        </LinearLayout>
 
     </LinearLayout>
 
