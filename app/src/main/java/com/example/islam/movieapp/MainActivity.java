@@ -15,12 +15,15 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements MainFragment.OnFragmentInteractionListener {
 
-    private ArrayList<Movie> movies;
     static String API_KEY = "f938081fe3aeb032354e55c5d152d05f";
+    private ArrayList<Movie> movies;
     private Context context;
     Boolean IsTwoPane = false;
 
-
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
                 }
             }
         } else {
-            Toast.makeText(this, "No Internet Connection", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -88,8 +91,7 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
                 }
             }
         } else {
-            Toast.makeText(this, "No Internet Connection", Toast.LENGTH_LONG).show();
-
+            Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -112,10 +114,8 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-
         MainFragment m = new MainFragment();
         m.setmListener(this);
-
         int id = item.getItemId();
         String url = null;
         Bundle bundle = new Bundle();
@@ -153,15 +153,14 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.flMain, m, "")
                             .commit();
-
                     return true;
                 }
             } else {
-                Toast.makeText(this, "No Internet Connection", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show();
             }
             return super.onOptionsItemSelected(item);
         } catch (Exception e) {
-            Toast.makeText(getBaseContext(), "No Internet Connection", Toast.LENGTH_LONG).show();
+            Toast.makeText(getBaseContext(), "No Internet Connection", Toast.LENGTH_SHORT).show();
             return super.onOptionsItemSelected(item);
         }
     }

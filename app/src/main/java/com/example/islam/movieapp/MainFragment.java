@@ -1,6 +1,5 @@
 package com.example.islam.movieapp;
 
-import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,13 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.Toast;
-
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,20 +38,6 @@ public class MainFragment extends Fragment {
     ArrayList<Movie> movieList;
     static String API_KEY = "f938081fe3aeb032354e55c5d152d05f";
 
-    public void onResume()
-    {  // After a pause OR at startup
-        super.onResume();
-
-        Bundle sentData = getArguments();
-        final String favorite = sentData.getString("favorite");
-        String url = sentData.getString("url");
-
-        if (favorite != null && favorite.contains("favorite")) {
-            FavoriteMovies();
-        } else {
-            new FetchMovies().execute(url);
-        }
-    }
 
     private OnTaskCompleted listener = new OnTaskCompleted() {
         @Override
@@ -66,20 +46,23 @@ public class MainFragment extends Fragment {
         }
 
         @Override
-        public Movie getMovie()
-        {
-            return movie ;
+        public Movie getMovie() {
+            return movie;
         }
     };
 
     public MainFragment() {
         movieList = new ArrayList<Movie>();
-
     }
 
 
     public void setmListener(OnFragmentInteractionListener mListener) {
         this.mListener = mListener;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
     @Override
@@ -98,106 +81,52 @@ public class MainFragment extends Fragment {
             String url = sentData.getString("url");
 
 
-            /*
             if (favorite != null && favorite.contains("favorite")) {
+
                 FavoriteMovies();
+
             } else {
+
                 new FetchMovies().execute(url);
+
             }
-*/
+
             gridPosters.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                    String movieId = null ;
-                    MovieDBHandler dbHandler = new MovieDBHandler(getContext());
-                    Movie mMovie = null ;
-                    DBTable table = null ;
-
-                    if (favorite != null && favorite.contains("favorite"))
-                    {
-                        ArrayList<DBTable> DBList = dbHandler.selectAll();
-                        table = DBList.get(position);
-                        mMovie = FetchMovieByURI(table.getId());
-                        //Toast.makeText(getContext(),mMovie.)
-                    }
-                    else
-                        mMovie = movieList.get(position);
+                    Movie mMovie = movieList.get(position);
 
                     mListener.onFragmentInteraction(mMovie);
                 }
             });
 
         } catch (Exception e) {
-            Toast.makeText(getContext(), "Error :" + e, Toast.LENGTH_LONG).show();
+            //Toast.makeText(getContext(), "Error :" + e, Toast.LENGTH_LONG).show();
         }
         return fragment;
     }
 
-    public void FavoriteMovies()
-    {
-        MovieDBHandler movieDBHandler = new MovieDBHandler(getContext());
-        final ArrayList<DBTable> all = movieDBHandler.selectAll();
 
-        gridPosters.setAdapter(new BaseAdapter() {
-            @Override
-            public int getCount() {
-                return all.size();
-            }
-
-            @Override
-            public Object getItem(int position) {
-                return all.get(position);
-            }
-
-            @Override
-            public long getItemId(int position) {
-                return position;
-            }
-
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
-                View view = convertView;
-                ImageView ivPoster ;
-                if (view == null) {
-
-                    LayoutInflater inflater = (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-                    view = inflater.inflate(R.layout.grid_list_item,null);
-
-                    ivPoster = (ImageView)view.findViewById(R.id.movie_poster);
-
-                    int h = getContext().getResources().getDisplayMetrics().densityDpi;
-//
-                    ivPoster.setLayoutParams(new GridView.LayoutParams(h - 45, h - 39));
-
-                    ivPoster.setScaleType(ImageView.ScaleType.CENTER_CROP);
-
-                    view.setTag(ivPoster);
-                } else {
-                    ivPoster = (ImageView) view.getTag();
-                }
-
-                Picasso.with(getContext()).load("http://image.tmdb.org/t/p/w185" + all.get(position).getPoster()).into(ivPoster);
-
-                return view;
-            }
-        });
+    public void FavoriteMovies() {
+        FetchFavoriteMovies();
     }
+
 
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Movie mov);
     }
 
-    public Movie FetchMovieByURI(String id) {
+    public void FetchFavoriteMovies() {
 
-        String url = "http://api.themoviedb.org/3/movie/" + id + "?api_key=" + API_KEY;
+        MovieDBHandler dbhandler = new MovieDBHandler(getContext());
+        ArrayList<DBTable> allTable = dbhandler.selectAll();
 
-        new MyTask(listener).execute(url);
+        new MyTask(listener, allTable).execute();
 
-        return listener.getMovie() ;
     }
+
 
     class FetchMovies extends AsyncTask<String, Integer, String> {
 
@@ -218,7 +147,6 @@ public class MainFragment extends Fragment {
 
         @Override
         protected String doInBackground(String... urls) {
-            //      Toast.makeText(getContext(), "doInBackground", Toast.LENGTH_LONG).show();
 
             HttpURLConnection urlConnection = null;
             BufferedReader reader = null;
@@ -283,13 +211,9 @@ public class MainFragment extends Fragment {
         protected void onPostExecute(String response) {
             try {
 
-                //    Toast.makeText(getContext(),"HELLLO",Toast.LENGTH_LONG).show();
-
                 super.onPostExecute(response);
-                //  TextView test = (TextView) findViewById(R.id.test2);
                 JSONObject json = new JSONObject(response);
                 JSONArray results = json.getJSONArray("results");
-
 
                 for (int i = 0; i < results.length(); i++) {
                     Movie temp = new Movie();
@@ -305,6 +229,7 @@ public class MainFragment extends Fragment {
                 }
 
                 movieList = movies;
+
                 gridPosters.setAdapter(new MovieAdapter(getContext(), movies));
 
                 if (bar != null)
@@ -316,49 +241,60 @@ public class MainFragment extends Fragment {
         }
     }
 
-    class MyTask extends AsyncTask<String, Integer, String> {
+    class MyTask extends AsyncTask<Void, Integer, ArrayList<String>> {
 
         private OnTaskCompleted listener;
+        ArrayList<DBTable> dbTables;
 
-        public MyTask(OnTaskCompleted listener) {
+        public MyTask(OnTaskCompleted listener, ArrayList<DBTable> dbTables) {
             this.listener = listener;
+            this.dbTables = dbTables;
         }
 
         @Override
-        protected String doInBackground(String... params) {
+        protected ArrayList<String> doInBackground(Void... params) {
             HttpURLConnection urlConnection = null;
             BufferedReader reader = null;
             String movieJsonStr = null;
 
+            ArrayList<String> jsonArr = new ArrayList<String>();
+
+
             try {
-                String baseUrl = params[0];
 
-                URL url = new URL(baseUrl);
+                for (int i = 0; i < dbTables.size(); i++) {
 
+                    String id = dbTables.get(i).getId();
+                    String baseUrl = "http://api.themoviedb.org/3/movie/" + id + "?api_key=" + API_KEY;
 
-                urlConnection = (HttpURLConnection) url.openConnection();
-                urlConnection.setRequestMethod("GET");
-                urlConnection.connect();
+                    URL url = new URL(baseUrl);
 
-                // Read the input stream into a String
-                InputStream inputStream = urlConnection.getInputStream();
-                StringBuilder buffer = new StringBuilder();
-                if (inputStream == null) {
-                    // Nothing to do.
-                    return null;
+                    urlConnection = (HttpURLConnection) url.openConnection();
+                    urlConnection.setRequestMethod("GET");
+                    urlConnection.connect();
+
+                    // Read the input stream into a String
+                    InputStream inputStream = urlConnection.getInputStream();
+                    StringBuilder buffer = new StringBuilder();
+                    if (inputStream == null) {
+                        // Nothing to do.
+                        return null;
+                    }
+
+                    reader = new BufferedReader(new InputStreamReader(inputStream));
+
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        buffer.append(line + "\n");
+                    }
+
+                    if (buffer.length() == 0) {
+                        return null;
+                    }
+                    movieJsonStr = buffer.toString();
+
+                    jsonArr.add(movieJsonStr);
                 }
-                reader = new BufferedReader(new InputStreamReader(inputStream));
-
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    buffer.append(line + "\n");
-                }
-
-                if (buffer.length() == 0) {
-                    return null;
-                }
-                movieJsonStr = buffer.toString();
-
 
             } catch (IOException e) {
                 Log.e("Movies", "Error ", e);
@@ -374,28 +310,43 @@ public class MainFragment extends Fragment {
                     }
                 }
             }
-            return movieJsonStr;
+            return jsonArr;
         }
 
         @Override
-        protected void onPostExecute(String response) {
+        protected void onPreExecute() {
+            super.onPreExecute();
+            movieList.clear();
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<String> response) {
             try {
-                //super.onPostExecute(response);
 
-                JSONObject jsonObj = new JSONObject(response);
+                super.onPostExecute(response);
 
-                Movie temp = new Movie();
+                ArrayList<Movie> movieArr = new ArrayList<Movie>();
+                for (String json : response) {
 
-                temp.setPoster(jsonObj.getString("poster_path"));
-                temp.setId(jsonObj.getString("id"));
-                temp.setTitle(jsonObj.getString("original_title"));
-                temp.setOverview(jsonObj.getString("overview"));
-                temp.setReleaseDate(jsonObj.getString("release_date"));
-                temp.setUserRating(jsonObj.getString("vote_average"));
+                    JSONObject jsonObj = new JSONObject(json);
 
+                    Movie temp = new Movie();
 
-                movie.clone(temp);
-                listener.onTaskCompleted(temp);
+                    temp.setPoster(jsonObj.getString("poster_path"));
+                    temp.setId(jsonObj.getString("id"));
+                    temp.setTitle(jsonObj.getString("original_title"));
+                    temp.setOverview(jsonObj.getString("overview"));
+                    temp.setReleaseDate(jsonObj.getString("release_date"));
+                    temp.setUserRating(jsonObj.getString("vote_average"));
+
+                    listener.onTaskCompleted(temp);
+
+                    movieArr.add(temp);
+
+                }
+
+                movieList = movieArr;
+                gridPosters.setAdapter(new MovieAdapter(getContext(), movieArr));
 
             } catch (JSONException e) {
                 Log.e("Movies", "Json Error ", e);

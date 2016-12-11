@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -46,6 +45,13 @@ public class DetailsFragment extends Fragment {
     public DetailsFragment() {
         // Required empty public constructor
     }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -98,7 +104,6 @@ public class DetailsFragment extends Fragment {
             });
 
 
-
             AsyncTask<Movie, Integer, Movie> asyncTask = new AsyncTask<Movie, Integer, Movie>() {
 
                 @Override
@@ -120,21 +125,23 @@ public class DetailsFragment extends Fragment {
 
                     date.setText(movie.getReleaseDate());
 
-                    avg.setText(movie.getUserRating()+"//10");
+                    avg.setText(movie.getUserRating() + "/10");
 
                     trailersList = new ArrayList<Trailer>();
 
                     FetchTrailersAndReviews(movie.getId());
 
                 }
-            }.execute(movie);
+            };
+
+            asyncTask.execute(movie);
+
         } catch (Exception e) {
-            Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+           // Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
         }
 
         return detailsFragment;
     }
-
 
 
     private void FetchTrailersAndReviews(String id) {

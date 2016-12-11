@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -130,7 +129,7 @@ public class MovieDBHandler extends SQLiteOpenHelper {
 
         }catch (SQLException e)
         {
-           Toast.makeText(context,"due to: "+e,Toast.LENGTH_LONG).show();
+          // Toast.makeText(context,"due to: "+e,Toast.LENGTH_LONG).show();
         }finally {
             c.close();
             db.close();
