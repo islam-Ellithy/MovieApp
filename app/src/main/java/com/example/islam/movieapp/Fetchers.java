@@ -303,7 +303,7 @@ class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.ViewHolder> {
     public void onBindViewHolder(ViewHolder holder, final int position) {
         try {
             holder.title.setText(trailers.get(position).name);
-            holder.title.setOnClickListener(new View.OnClickListener() {
+            holder.logo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     String url = "https://www.youtube.com/watch?v=" + trailers.get(position).getKey();

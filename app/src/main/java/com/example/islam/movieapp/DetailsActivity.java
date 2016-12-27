@@ -54,7 +54,7 @@ public class DetailsActivity extends AppCompatActivity {
             }
 
         } catch (Exception e) {
-           // Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+
         }
     }
 
@@ -79,11 +79,6 @@ public class DetailsActivity extends AppCompatActivity {
 
         int id = item.getItemId();
 
-        switch (id) {
-            case R.id.back:
-                finish();
-                return true;
-        }
         return super.onOptionsItemSelected(item);
     }
 }

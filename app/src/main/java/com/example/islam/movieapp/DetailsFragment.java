@@ -41,15 +41,55 @@ public class DetailsFragment extends Fragment {
     TextView test = null;
     ImageButton favorite = null;
     boolean Isfavorite = true;
-
+    Movie movie ;
     public DetailsFragment() {
         // Required empty public constructor
     }
+
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        Bundle bundle = getArguments();
+
+        final Movie moviee = (Movie) bundle.getSerializable("movie");
+
+        this.movie = moviee ;
+
+        AsyncTask<Movie, Integer, Movie> asyncTask = new AsyncTask<Movie, Integer, Movie>() {
+
+            @Override
+            protected Movie doInBackground(Movie... params) {
+
+                return params[0];
+            }
+
+            @Override
+            protected void onPostExecute(Movie s) {
+
+                Picasso.with(getContext()).load("http://image.tmdb.org/t/p/w185" + movie.getPoster()).into(img);
+
+                title.setText(movie.getTitle());
+
+                overview.setText(movie.getOverview());
+
+                overview.setMovementMethod(new ScrollingMovementMethod());
+
+                date.setText(movie.getReleaseDate());
+
+                avg.setText(movie.getUserRating() + "/10");
+
+                trailersList = new ArrayList<Trailer>();
+
+                FetchTrailersAndReviews(movie.getId());
+
+            }
+        };
+
+        asyncTask.execute(movie);
+
     }
 
 
@@ -69,9 +109,6 @@ public class DetailsFragment extends Fragment {
             avg = (TextView) detailsFragment.findViewById(R.id.rate);
             favorite = (ImageButton) detailsFragment.findViewById(R.id.favorite);
 
-            Bundle bundle = getArguments();
-
-            final Movie movie = (Movie) bundle.getSerializable("movie");
 
             final MovieDBHandler dbHandler = new MovieDBHandler(getContext());
 
@@ -104,37 +141,6 @@ public class DetailsFragment extends Fragment {
             });
 
 
-            AsyncTask<Movie, Integer, Movie> asyncTask = new AsyncTask<Movie, Integer, Movie>() {
-
-                @Override
-                protected Movie doInBackground(Movie... params) {
-
-                    return params[0];
-                }
-
-                @Override
-                protected void onPostExecute(Movie s) {
-
-                    Picasso.with(getContext()).load("http://image.tmdb.org/t/p/w185" + movie.getPoster()).into(img);
-
-                    title.setText(movie.getTitle());
-
-                    overview.setText(movie.getOverview());
-
-                    overview.setMovementMethod(new ScrollingMovementMethod());
-
-                    date.setText(movie.getReleaseDate());
-
-                    avg.setText(movie.getUserRating() + "/10");
-
-                    trailersList = new ArrayList<Trailer>();
-
-                    FetchTrailersAndReviews(movie.getId());
-
-                }
-            };
-
-            asyncTask.execute(movie);
 
         } catch (Exception e) {
            // Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
@@ -151,8 +157,3 @@ public class DetailsFragment extends Fragment {
 
 
 }
-
-
-
-
-
