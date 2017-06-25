@@ -40,3 +40,6 @@ and also is my project on udacity course for android & MAL program from google &
 * GridView - for listing movies on screen
 
 * SQLite - for data base
+
+
+![certificate from udacity](https://drive.google.com/open?id=0B1rTAATEbSM1bFBJSkRZMmdXVGs)
