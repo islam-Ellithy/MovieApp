@@ -19,7 +19,13 @@ import java.util.ArrayList;
 import static com.example.islam.movieapp.R.drawable.on;
 
 
+<<<<<<< HEAD
 
+=======
+/**
+ * islam emam
+ */
+>>>>>>> e6729961d5a8f8aeeadbb72e06ad8c928a680410
 
 //    private OnFragmentInteractionListener mListener;
 
@@ -31,7 +37,11 @@ public class DetailsFragment extends Fragment {
     private RecyclerView.LayoutManager mLayoutManager;
     public ArrayList<Trailer> trailersList;
     public MovieDBHandler movieDBHandler = null;
+<<<<<<< HEAD
     ImageView img = null  ;
+=======
+    ImageView img = null;
+>>>>>>> e6729961d5a8f8aeeadbb72e06ad8c928a680410
     TextView title = null;
     TextView overview = null;
     TextView date = null;

@@ -40,7 +40,10 @@ public class MainFragment extends Fragment {
 
 
     private OnTaskCompleted listener = new OnTaskCompleted() {
+<<<<<<< HEAD
 
+=======
+>>>>>>> e6729961d5a8f8aeeadbb72e06ad8c928a680410
         @Override
         public void onTaskCompleted(Movie mMovie) {
             movie.clone(mMovie);
@@ -229,7 +232,10 @@ public class MainFragment extends Fragment {
                     movies.add(temp);
                 }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> e6729961d5a8f8aeeadbb72e06ad8c928a680410
                 movieList = movies;
 
                 gridPosters.setAdapter(new MovieAdapter(getContext(), movies));

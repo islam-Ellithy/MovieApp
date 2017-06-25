@@ -20,17 +20,21 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
     private Context context;
     Boolean IsTwoPane = false;
 
+<<<<<<< HEAD
 
     @Override
     protected void onStart() {
         super.onStart();
     }
 
+=======
+>>>>>>> e6729961d5a8f8aeeadbb72e06ad8c928a680410
     @Override
     protected void onPostResume() {
         super.onPostResume();
     }
 
+<<<<<<< HEAD
 
     @Override
     public void onResume() {
@@ -38,6 +42,8 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
     }
 
 
+=======
+>>>>>>> e6729961d5a8f8aeeadbb72e06ad8c928a680410
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,7 +107,10 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
                             .beginTransaction()
                             .replace(R.id.flDetails, detailsFragment, "")
                             .commit();
+<<<<<<< HEAD
 
+=======
+>>>>>>> e6729961d5a8f8aeeadbb72e06ad8c928a680410
                 }
             }
         } else {

@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 24
+<<<<<<< HEAD
     buildToolsVersion '25.0.0'
 
     defaultConfig {
@@ -9,6 +10,15 @@ android {
         minSdkVersion 19
         targetSdkVersion 24
         versionCode 2
+=======
+    buildToolsVersion "24.0.3"
+
+    defaultConfig {
+        applicationId "com.example.islam.movieapp"
+        minSdkVersion 19
+        targetSdkVersion 24
+        versionCode 1
+>>>>>>> e6729961d5a8f8aeeadbb72e06ad8c928a680410
         versionName "1.0"
     }
     buildTypes {
