@@ -58,7 +58,7 @@ public class DetailsActivity extends AppCompatActivity {
         }
     }
 
-<<<<<<< HEAD
+
     @Override
     public void onBackPressed() {
         Intent intent = new Intent(this, MainActivity.class);
@@ -66,8 +66,6 @@ public class DetailsActivity extends AppCompatActivity {
         finish();
     }
 
-=======
->>>>>>> e6729961d5a8f8aeeadbb72e06ad8c928a680410
     //check internet connection
     private boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager
