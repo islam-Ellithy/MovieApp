@@ -46,5 +46,4 @@ and also is my project on udacity course for android & MAL program from google &
 
 ![certificate from udacity](https://github.com/islam-Ellithy/MovieApp/blob/master/photos/certificate.PNG)
 
-![certificate from udacity](https://github.com/islam-Ellithy/MovieApp/blob/master/photos/mal.jpg)
 
