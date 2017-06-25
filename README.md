@@ -6,7 +6,7 @@ and also is my project on udacity course for android & MAL program from google &
 
 
 
-### 5. API URL
+### 1. API URL
 * Get Details of specific movie by it's id                                                                                           
 
   http://api.themoviedb.org/3/movie/id?api_key=XXXXX
@@ -27,7 +27,7 @@ and also is my project on udacity course for android & MAL program from google &
   http://api.themoviedb.org/3/movie/top_rated?api_key=XXXXXX
   
   
-### 6. Built With
+### 2. Built With
                                                                                                                      
 * AsyncTask - for consuming the api from openweathermap
 
@@ -42,5 +42,6 @@ and also is my project on udacity course for android & MAL program from google &
 
 * SQLite - for data base
 
+### 3. Certificate from Udacity
 
 ![certificate from udacity](https://github.com/islam-Ellithy/MovieApp/blob/master/certificate.PNG)
