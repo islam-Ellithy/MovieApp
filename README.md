@@ -1,7 +1,5 @@
-<<<<<<< HEAD
 # MovieApp
-=======
-# About MovieApp
+
 Is android app that through it you can browse the newest movies that you can enter it in the cinema and it consisting of 3 main views
 a view for display most popular movies , top rated movies and your favorite movies that you marked them as favorite
 and also is my project on udacity course for android & MAL program from google & ITI that follow the minstry of communications and information technology
@@ -45,5 +43,4 @@ and also is my project on udacity course for android & MAL program from google &
 * SQLite - for data base
 
 
-![certificate from udacity](https://drive.google.com/open?id=0B1rTAATEbSM1bFBJSkRZMmdXVGs)
->>>>>>> e6729961d5a8f8aeeadbb72e06ad8c928a680410
+![certificate from udacity](https://github.com/islam-Ellithy/MovieApp/blob/master/certificate.PNG)
